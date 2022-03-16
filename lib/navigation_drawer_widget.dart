@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutriland_prototype/calculator.dart';
 import 'package:nutriland_prototype/home_screen.dart';
+import 'package:nutriland_prototype/lasagna_recipe.dart';
 import 'package:nutriland_prototype/pasta_categorie.dart';
 
 // ignore_for_file: prefer_const_constructors
@@ -10,66 +11,68 @@ class NavigationDrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: Material(
-          color: Color.fromRGBO(255, 220, 186, 1),
-          child: ListView(
-            padding: padding,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: <Widget>[
-              ElevatedButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(255, 220, 186, 1),
-                  elevation: 0,
-                ),
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen())),
-                child: Container(
-                  padding: padding.add(EdgeInsets.symmetric(vertical: 20)),
-                  child: Image.asset('assets/NutrilandHn.png'),
-                ),
+      child: Material(
+        color: Color.fromRGBO(255, 220, 186, 1),
+        child: ListView(
+          padding: padding,
+          // ignore: prefer_const_literals_to_create_immutables
+          children: <Widget>[
+            ElevatedButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Color.fromRGBO(255, 220, 186, 1),
+                elevation: 0,
               ),
-              Divider(
-                color: Colors.black87,
+              onPressed: () => Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => HomeScreen())),
+              child: Container(
+                padding: padding.add(EdgeInsets.symmetric(vertical: 20)),
+                child: Image.asset('assets/NutrilandHn.png'),
               ),
-              buildMenuItem(
-                text: 'Drinks',
-                icon: Icons.local_cafe_rounded,
-              ),
-              buildMenuItem(
-                text: 'Salads',
-                icon: Icons.graphic_eq,
-              ),
-              buildMenuItem(
-                text: 'Pastas',
-                icon: Icons.brunch_dining,
-                onClicked: () => selectedItem(context, 0) ,
-              ),
-              buildMenuItem(
-                text: 'Sauces',
-                icon: Icons.liquor,
-              ),
-              buildMenuItem(
-                text: 'Desserts',
-                icon: Icons.cake,
-              ),
-              buildMenuItem(
-                text: 'Basic',
-                icon: Icons.fastfood,
-              ),
+            ),
             Divider(
               color: Colors.black87,
             ),
-              buildMenuItem(
-                text: 'Calculator',
-                icon: Icons.calculate_sharp,
-                onClicked: () => selectedItem(context, 6) ,
-              ),
-              buildMenuItem(
-                text: 'Notepad',
-                icon: Icons.note,
-              ),
-            ],
-          ),
+            buildMenuItem(
+              text: 'Drinks',
+              icon: Icons.local_cafe_rounded,
+              onClicked: () => selectedItem(context, 1),
+            ),
+            buildMenuItem(
+              text: 'Salads',
+              icon: Icons.graphic_eq,
+            ),
+            buildMenuItem(
+              text: 'Pastas',
+              icon: Icons.brunch_dining,
+              onClicked: () => selectedItem(context, 0),
+            ),
+            buildMenuItem(
+              text: 'Sauces',
+              icon: Icons.liquor,
+            ),
+            buildMenuItem(
+              text: 'Desserts',
+              icon: Icons.cake,
+            ),
+            buildMenuItem(
+              text: 'Basic',
+              icon: Icons.fastfood,
+            ),
+            Divider(
+              color: Colors.black87,
+            ),
+            buildMenuItem(
+              text: 'Calculator',
+              icon: Icons.calculate_sharp,
+              onClicked: () => selectedItem(context, 6),
+            ),
+            buildMenuItem(
+              text: 'Notepad',
+              icon: Icons.note,
+            ),
+          ],
         ),
+      ),
     );
   }
 
@@ -77,12 +80,18 @@ class NavigationDrawerWidget extends StatelessWidget {
     required String text,
     required IconData icon,
     VoidCallback? onClicked,
-}) {
+  }) {
     final color = Colors.black87;
 
     return ListTile(
-      leading: Icon(icon, color: color,),
-      title: Text(text, style: TextStyle(color: color),),
+      leading: Icon(
+        icon,
+        color: color,
+      ),
+      title: Text(
+        text,
+        style: TextStyle(color: color),
+      ),
       onTap: onClicked,
     );
   }
@@ -90,14 +99,18 @@ class NavigationDrawerWidget extends StatelessWidget {
   void selectedItem(BuildContext context, int index) {
     Navigator.of(context).pop();
 
-    switch(index) {
+    switch (index) {
       case 0:
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => PastaPage()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => PastaPage()));
         break;
       case 6:
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => Calculator()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => Calculator()));
+        break;
+      case 1:
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => LasagnaRecipe()));
         break;
     }
   }
