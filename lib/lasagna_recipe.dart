@@ -24,6 +24,21 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
   bool checkBoxValue9 = false;
   bool checkBoxValue10 = false;
 
+  final List<String> portions = [
+    "6",
+    "12",
+    "18",
+  ];
+
+  String calculatePortion (double value, String constant){
+    double times = double.parse(constant) / 6;
+    var result = value * times;
+
+    return result.toString();
+  }
+
+  late String _startPortion = "6";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +87,9 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                       ),
                       onRatingUpdate: (rating) {},
                     ),
+                    SizedBox(
+                      width: 15,
+                    ),
                     Icon(
                       Icons.access_time,
                       color: Color.fromRGBO(255, 220, 186, 1),
@@ -81,11 +99,14 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                       width: 5,
                     ),
                     Text(
-                      "duration",
+                      "1:30Hrs",
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.black54,
                           fontFamily: 'Lato'),
+                    ),
+                    SizedBox(
+                      width: 15,
                     ),
                     Icon(
                       Icons.pie_chart,
@@ -94,6 +115,31 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                     ),
                     SizedBox(
                       width: 5,
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(255, 220, 186, 1),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          value: _startPortion,
+                          alignment: AlignmentDirectional.center,
+                          elevation: 0,
+                          dropdownColor: Color.fromRGBO(255, 220, 186, 1),
+                          items: portions.map((String value) {
+                            return DropdownMenuItem(
+                              value: value,
+                              child: Center(child: Text(value)),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _startPortion = value.toString();
+                            });
+                          },
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -147,7 +193,7 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue1 = value!),
                               ),
-                              Text("9 lasagna noodles"),
+                              Text(calculatePortion(9, _startPortion) + " lasagna noodles"),
                             ],
                           ),
                         ),
@@ -161,7 +207,7 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue2 = value!),
                               ),
-                              Text("4 1/2 cups meat sauce"),
+                              Text(calculatePortion(4.5, _startPortion) + " cups meat sauce"),
                             ],
                           ),
                         ),
@@ -175,7 +221,7 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue3 = value!),
                               ),
-                              Text("475 grams ricotta"),
+                              Text(calculatePortion(475, _startPortion) + " grams ricotta"),
                             ],
                           ),
                         ),
@@ -189,7 +235,7 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue4 = value!),
                               ),
-                              Text("3 cups mozzarella"),
+                              Text(calculatePortion(3, _startPortion) + " cups mozzarella"),
                             ],
                           ),
                         ),
@@ -203,7 +249,7 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue5 = value!),
                               ),
-                              Text("1 cup parmessan"),
+                              Text(calculatePortion(1, _startPortion) + " cup parmessan"),
                             ],
                           ),
                         ),
@@ -217,7 +263,7 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue6 = value!),
                               ),
-                              Text("3 tablespoons butter"),
+                              Text(calculatePortion(3, _startPortion) + " tablespoons butter"),
                             ],
                           ),
                         ),
@@ -231,7 +277,7 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue7 = value!),
                               ),
-                              Text("3 tablespoons flour"),
+                              Text(calculatePortion(3, _startPortion) + " tablespoons flour"),
                             ],
                           ),
                         ),
@@ -245,7 +291,7 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue8 = value!),
                               ),
-                              Text("2 cups milk"),
+                              Text(calculatePortion(2, _startPortion) + " cups milk"),
                             ],
                           ),
                         ),
@@ -259,7 +305,7 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue9 = value!),
                               ),
-                              Text("1/4 teaspoons salt"),
+                              Text(calculatePortion(0.25, _startPortion) + " teaspoons salt"),
                             ],
                           ),
                         ),
@@ -273,7 +319,7 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue10 = value!),
                               ),
-                              Text("0.12 teaspoons nutmeg"),
+                              Text(calculatePortion(0.12, _startPortion) + " teaspoons nutmeg"),
                             ],
                           ),
                         ),
@@ -402,7 +448,7 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Image.asset("assets/lasagna.jpg", height: 120, width: 120, fit: BoxFit.fill),
+                        Image.asset("assets/wings.jpg", height: 120, width: 120, fit: BoxFit.fill),
                         Text("BBQ Wings", style: TextStyle(fontSize: 20),),
                         Text("Basics", style: TextStyle(fontSize: 15),),
                         RatingBar.builder(
@@ -423,11 +469,11 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Image.asset("assets/lasagna.jpg", height: 120, width: 120, fit: BoxFit.fill),
-                        Text("BBQ Wings", style: TextStyle(fontSize: 20),),
-                        Text("Basics", style: TextStyle(fontSize: 15),),
+                        Image.asset("assets/salads.jpg", height: 120, width: 120, fit: BoxFit.fill),
+                        Text("Green Salad", style: TextStyle(fontSize: 20),),
+                        Text("Salads", style: TextStyle(fontSize: 15),),
                         RatingBar.builder(
-                          initialRating: 4,
+                          initialRating: 2,
                           minRating: 1,
                           itemSize: 17,
                           itemBuilder: (context, _) => Icon(
@@ -444,11 +490,11 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Image.asset("assets/lasagna.jpg", height: 120, width: 120, fit: BoxFit.fill),
-                        Text("BBQ Wings", style: TextStyle(fontSize: 20),),
+                        Image.asset("assets/toast.jpg", height: 120, width: 120, fit: BoxFit.fill),
+                        Text("Garlic Toast", style: TextStyle(fontSize: 20),),
                         Text("Basics", style: TextStyle(fontSize: 15),),
                         RatingBar.builder(
-                          initialRating: 4,
+                          initialRating: 3.5,
                           minRating: 1,
                           itemSize: 17,
                           itemBuilder: (context, _) => Icon(
