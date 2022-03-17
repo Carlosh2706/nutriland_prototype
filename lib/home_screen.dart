@@ -137,7 +137,7 @@ class HomeScreen extends StatelessWidget {
                         margin: EdgeInsets.symmetric(horizontal: 5.0),
                         child: GestureDetector(
                           child: Image.asset(i, fit:  BoxFit.fill,),
-                          // onTap: Navigator.push(context, MaterialPageRoute(builder: (context) => ())),
+                          onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => NotAvailablePage()));},
                         ),
                       );
                     }).toList(),
@@ -148,9 +148,15 @@ class HomeScreen extends StatelessWidget {
                   height: 10,
                   thickness: 3,
                 ),
-                RecipeTemplate("Rigatoni","assets/rigatoni.jpg","Pastas",3,"50Mins"),
-                RecipeTemplate("Cheesecake","assets/cheesecake.jpg","Desserts",4,"2:00Hrs"),
-                RecipeTemplate("Burger","assets/burger.jpg","Basics",2,"45Mins"),
+                GestureDetector(
+                    onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => NotAvailablePage()));},
+                    child: RecipeTemplate("Rigatoni","assets/rigatoni.jpg","Pastas",3,"50Mins")),
+                GestureDetector(
+                    onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => NotAvailablePage()));},
+                    child: RecipeTemplate("Cheesecake","assets/cheesecake.jpg","Desserts",4,"2:00Hrs")),
+                GestureDetector(
+                    onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => NotAvailablePage()));},
+                    child: RecipeTemplate("Burger","assets/burger.jpg","Basics",2,"45Mins")),
                 SizedBox(height: 15,),
                 const Divider(
                   height: 0,
