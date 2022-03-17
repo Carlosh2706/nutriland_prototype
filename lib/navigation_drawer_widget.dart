@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutriland_prototype/calculator.dart';
 import 'package:nutriland_prototype/home_screen.dart';
-import 'package:nutriland_prototype/lasagna_recipe.dart';
+import 'package:nutriland_prototype/not_available_page.dart';
 import 'package:nutriland_prototype/pasta_categorie.dart';
 
 // ignore_for_file: prefer_const_constructors
@@ -22,8 +22,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                 backgroundColor: Color.fromRGBO(255, 220, 186, 1),
                 elevation: 0,
               ),
-              onPressed: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => HomeScreen())),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen())),
               child: Container(
                 padding: padding.add(EdgeInsets.symmetric(vertical: 20)),
                 child: Image.asset('assets/NutrilandHn.png'),
@@ -40,6 +39,7 @@ class NavigationDrawerWidget extends StatelessWidget {
             buildMenuItem(
               text: 'Salads',
               icon: Icons.graphic_eq,
+              onClicked: () => selectedItem(context, 1),
             ),
             buildMenuItem(
               text: 'Pastas',
@@ -49,14 +49,17 @@ class NavigationDrawerWidget extends StatelessWidget {
             buildMenuItem(
               text: 'Sauces',
               icon: Icons.liquor,
+              onClicked: () => selectedItem(context, 1),
             ),
             buildMenuItem(
               text: 'Desserts',
               icon: Icons.cake,
+              onClicked: () => selectedItem(context, 1),
             ),
             buildMenuItem(
               text: 'Basic',
               icon: Icons.fastfood,
+              onClicked: () => selectedItem(context, 1),
             ),
             Divider(
               color: Colors.black87,
@@ -69,6 +72,7 @@ class NavigationDrawerWidget extends StatelessWidget {
             buildMenuItem(
               text: 'Notepad',
               icon: Icons.note,
+              onClicked: () => selectedItem(context, 1),
             ),
           ],
         ),
@@ -110,8 +114,9 @@ class NavigationDrawerWidget extends StatelessWidget {
         break;
       case 1:
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => LasagnaRecipe()));
+            .push(MaterialPageRoute(builder: (context) => NotAvailablePage()));
         break;
+
     }
   }
 }

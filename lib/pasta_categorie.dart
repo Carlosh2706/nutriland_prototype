@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nutriland_prototype/home_screen.dart';
+import 'package:nutriland_prototype/lasagna_recipe.dart';
 import 'package:nutriland_prototype/navigation_drawer_widget.dart';
 
 // ignore_for_file: prefer_const_constructors
@@ -32,11 +34,14 @@ class PastaPage extends StatelessWidget {
       endDrawer: NavigationDrawerWidget(),
       appBar: AppBar(
         centerTitle: true,
-        title: Text('NutrilandHn', style: TextStyle(
-          color: Colors.black87,
-          fontFamily: 'GreatVibes',
-          fontSize: 40,
-        ),),
+        title: GestureDetector(
+          onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));},
+          child: Text('NutrilandHn', style: TextStyle(
+            color: Colors.black87,
+            fontFamily: 'GreatVibes',
+            fontSize: 40,
+          ),),
+        ),
         backgroundColor: const Color.fromRGBO(255, 220, 186, 1),
         elevation: 10,
       ),
@@ -150,14 +155,17 @@ class PastaPage extends StatelessWidget {
                   fontFamily: 'Lato'
               ),),
             ),
-            FavoriteTemplate("Lasagna","assets/lasagna.jpg",3,"1:20Hrs"),
+            GestureDetector(
+                onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => LasagnaRecipe()));},
+                child: FavoriteTemplate("Lasagna","assets/lasagna.jpg",4,"1:30Hrs")),
+            FavoriteTemplate("Pasta Alfredo","assets/alfredo.jpg",3.5,"1:00Hrs"),
             const Divider(
               height: 10,
               thickness: 3,
             ),
-            RecipeTemplate("Lasagna","assets/lasagna.jpg","Pastas",3,"1:20Hrs"),
-            RecipeTemplate("Cheesecake","assets/cheesecake.jpg","Desserts",4,"2:00Hrs"),
-            RecipeTemplate("Burger","assets/burger.jpg","Basics",2,"45Mins"),
+            RecipeTemplate("Mac&Cheese","assets/macandcheese.jpg","Pastas",2,"45Mins"),
+            RecipeTemplate("Rigatoni","assets/rigatoni.jpg","Pastas",3,"50Mins"),
+            RecipeTemplate("Ravioli with lemon zest","assets/ravioli.jpg","Pastas",4,"1:00Hr"),
             SizedBox(height: 15,),
             const Divider(
               height: 0,

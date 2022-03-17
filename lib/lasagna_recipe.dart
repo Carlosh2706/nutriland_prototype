@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nutriland_prototype/home_screen.dart';
 import 'package:nutriland_prototype/navigation_drawer_widget.dart';
 
 // ignore_for_file: prefer_const_constructors
@@ -29,13 +30,13 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
         endDrawer: NavigationDrawerWidget(),
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
-            'NutrilandHn',
-            style: TextStyle(
+          title: GestureDetector(
+            onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));},
+            child: Text('NutrilandHn', style: TextStyle(
               color: Colors.black87,
               fontFamily: 'GreatVibes',
               fontSize: 40,
-            ),
+            ),),
           ),
           backgroundColor: const Color.fromRGBO(255, 220, 186, 1),
           elevation: 10,

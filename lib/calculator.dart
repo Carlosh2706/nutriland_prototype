@@ -16,14 +16,43 @@ class _CalculatorState extends State<Calculator> {
   }
 
   final List<String> measures = [
-    'Pounds',
     'Grams',
     'Kilograms',
+    'Pounds',
+    'Ounces',
   ];
+
+  final Map<String, int> measuresMap = {
+    'Grams': 0,
+    'Kilograms': 1,
+    'Pounds': 2,
+    'Ounces': 3,
+  };
+
+  dynamic formulas = {
+    '0': [1, 0.0001, 0, 0, 0.00220, 0.03],
+    '1': [1000, 1, 0, 0, 2.2046, 35.274],
+    '2': [453.592, 0.4535, 0, 0, 1, 16],
+    '3': [28.3495, 0.02834, 3.28084, 0, 0.1]
+  };
+
+  void convert (double value, String from, String to){
+      int? nFrom = measuresMap[from];
+      int? nTo = measuresMap[to];
+      var multi = formulas[nFrom.toString()][nTo];
+      var result = value * multi;
+
+      resultMessage = result.toString();
+
+      setState(() {
+        resultMessage = resultMessage;
+      });
+  }
 
   late double userInput;
   late String _startMeasure = 'Pounds';
   late String _convertMeasure = 'Pounds';
+  late String resultMessage = "";
 
   @override
   Widget build(BuildContext context) {
@@ -61,42 +90,33 @@ class _CalculatorState extends State<Calculator> {
                 child: Column(
                   // ignore: prefer_const_literals_to_create_immutables
                   children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(255, 220, 186, 1),
-                      ),
-                      child: DropdownButton(
-                        hint: Text("Weight"),
-                        isExpanded: true,
-                        dropdownColor: Color.fromRGBO(255, 220, 186, 1),
-                        items: measures.map((String value) {
-                          return DropdownMenuItem(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (_) {},
-                      ),
-                    ),
-                    //Input field
-                    TextField(
-                      onChanged: (text) {
-                        var input = double.tryParse(text);
-                        if (input != null) {
-                          setState(() {
-                            userInput = input;
-                          });
-                        }
-                      },
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
-                      decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey[300],
-                          hintText: "Convert",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(0))),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              onChanged: (text) {
+                                var input = double.tryParse(text);
+                                if (input != null) {
+                                  setState(() {
+                                    userInput = input;
+                                  });
+                                }
+                              },
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                              decoration: InputDecoration(
+                                  hintText: "Enter amount",
+                               ),
+                            ),
+                          ),
+                        ),
+                        Expanded(flex: 1, child: Center(child: Text("="))),
+                        Expanded(flex: 2, child: Text((resultMessage == null)?'':resultMessage),
+                        )],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -169,11 +189,17 @@ class _CalculatorState extends State<Calculator> {
               ),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all( Color.fromRGBO(255, 220, 186, 1),)
-                ),
-                onPressed: () => {},
-                child: Container(
+                    backgroundColor: MaterialStateProperty.all(
+                  Color.fromRGBO(255, 220, 186, 1),
+                )),
+                onPressed: () => {
 
+                    if(_startMeasure.isEmpty || _convertMeasure.isEmpty || userInput == 0){}
+
+                    else
+                      convert(userInput, _startMeasure, _convertMeasure),
+                },
+                child: Container(
                   alignment: AlignmentDirectional.center,
                   height: 50,
                   decoration: BoxDecoration(

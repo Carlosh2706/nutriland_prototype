@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nutriland_prototype/navigation_drawer_widget.dart';
+import 'package:nutriland_prototype/not_available_page.dart';
+import 'package:nutriland_prototype/pasta_categorie.dart';
 
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: use_key_in_widget_constructors, must_be_immutable
@@ -11,12 +13,12 @@ class HomeScreen extends StatelessWidget {
 
   List<Map> categories = [
 
-    {'name': 'Drinks', 'imagePath': 'assets/drinks.jpg'},
-    {'name': 'Salads', 'imagePath': 'assets/salads.jpg'},
-    {'name': 'Pastas', 'imagePath': 'assets/alfredo.jpg'},
-    {'name': 'Sauces', 'imagePath': 'assets/sauces.jpg'},
-    {'name': 'Desserts', 'imagePath': 'assets/desserts.jpg'},
-    {'name': 'Basic', 'imagePath': 'assets/sandwich.jpg'},
+    {'name': 'Drinks', 'imagePath': 'assets/drinks.jpg', 'nextActivity': NotAvailablePage()},
+    {'name': 'Salads', 'imagePath': 'assets/salads.jpg', 'nextActivity': NotAvailablePage()},
+    {'name': 'Pastas', 'imagePath': 'assets/alfredo.jpg', 'nextActivity': PastaPage()},
+    {'name': 'Sauces', 'imagePath': 'assets/sauces.jpg', 'nextActivity': NotAvailablePage()},
+    {'name': 'Desserts', 'imagePath': 'assets/desserts.jpg', 'nextActivity': NotAvailablePage()},
+    {'name': 'Basic', 'imagePath': 'assets/sandwich.jpg', 'nextActivity': NotAvailablePage()},
 
   ];
 
@@ -26,20 +28,15 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       endDrawer: NavigationDrawerWidget(),
       appBar: AppBar(
-        // leading: Container(
-        //   padding: EdgeInsets.all(0),
-        //   child: const Image(
-        //     image: AssetImage('assets/NutrilandHn.png'),
-        //     width: 150,
-        //     height: 150,
-        //   ),
-        // ),
         centerTitle: true,
-        title: Text('NutrilandHn', style: TextStyle(
-            color: Colors.black87,
-            fontFamily: 'GreatVibes',
-            fontSize: 40,
-        ),),
+        title: GestureDetector(
+          onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));},
+          child: Text('NutrilandHn', style: TextStyle(
+              color: Colors.black87,
+              fontFamily: 'GreatVibes',
+              fontSize: 40,
+          ),),
+        ),
         backgroundColor: const Color.fromRGBO(255, 220, 186, 1),
         elevation: 10,
       ),
@@ -92,28 +89,31 @@ class HomeScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: categories.length,
                     itemBuilder: (context, index){
-                        return Container(
-                          width: 80,
-                          height: 90,
-                          alignment: Alignment.bottomCenter,
-                          margin: EdgeInsets.only(left: 15),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                              image: AssetImage(categories[index]['imagePath'],
+                        return GestureDetector(
+                          onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => categories[index]['nextActivity']));},
+                          child: Container(
+                            width: 80,
+                            height: 90,
+                            alignment: Alignment.bottomCenter,
+                            margin: EdgeInsets.only(left: 15),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: AssetImage(categories[index]['imagePath'],
+                              ),
+                                fit: BoxFit.fill,
+                              )
                             ),
-                              fit: BoxFit.fill,
+                            child: Text(
+                              categories[index]['name'],
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: 'Anton',
+                              ),
+                              textAlign: TextAlign.center,
                             )
                           ),
-                          child: Text(
-                            categories[index]['name'],
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontFamily: 'Anton',
-                            ),
-                            textAlign: TextAlign.center,
-                          )
                         );
                     },
                   ),
@@ -135,9 +135,6 @@ class HomeScreen extends StatelessWidget {
                       return Container(
                         width: MediaQuery.of(context).size.width,
                         margin: EdgeInsets.symmetric(horizontal: 5.0),
-                        decoration: BoxDecoration(
-                          color: Colors.amberAccent,
-                        ),
                         child: GestureDetector(
                           child: Image.asset(i, fit:  BoxFit.fill,),
                           // onTap: Navigator.push(context, MaterialPageRoute(builder: (context) => ())),
@@ -151,7 +148,7 @@ class HomeScreen extends StatelessWidget {
                   height: 10,
                   thickness: 3,
                 ),
-                RecipeTemplate("Lasagna","assets/lasagna.jpg","Pastas",3,"1:20Hrs"),
+                RecipeTemplate("Rigatoni","assets/rigatoni.jpg","Pastas",3,"50Mins"),
                 RecipeTemplate("Cheesecake","assets/cheesecake.jpg","Desserts",4,"2:00Hrs"),
                 RecipeTemplate("Burger","assets/burger.jpg","Basics",2,"45Mins"),
                 SizedBox(height: 15,),
