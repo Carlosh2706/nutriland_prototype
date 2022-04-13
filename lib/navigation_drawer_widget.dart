@@ -74,6 +74,9 @@ class NavigationDrawerWidget extends StatelessWidget {
               icon: Icons.note,
               onClicked: () => selectedItem(context, 1),
             ),
+            Divider(
+              color: Colors.black87,
+            ),
           ],
         ),
       ),
@@ -100,7 +103,7 @@ class NavigationDrawerWidget extends StatelessWidget {
     );
   }
 
-  void selectedItem(BuildContext context, int index) {
+  void selectedItem(BuildContext context, int index) async{
     Navigator.of(context).pop();
 
     switch (index) {

@@ -31,6 +31,7 @@ class PastaPage extends StatelessWidget {
     screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       endDrawer: NavigationDrawerWidget(),
       appBar: AppBar(
         centerTitle: true,
@@ -50,7 +51,6 @@ class PastaPage extends StatelessWidget {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 100,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   image: DecorationImage(
@@ -59,47 +59,42 @@ class PastaPage extends StatelessWidget {
                     fit: BoxFit.cover,
                   )
               ),
-              child: Text(
-                "Pastas",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: MediaQuery.of(context).size.width * 0.15,
-                  fontFamily: 'Anton',
-                ),
-                textAlign: TextAlign.center,
+              child: Column(
+                children: [
+                  Text(
+                    "Pastas",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: MediaQuery.of(context).size.width * 0.15,
+                      fontFamily: 'Anton',
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width - 30,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.white,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Icon(Icons.search),
+                            SizedBox(width: 10,),
+                            Text("Search a recipe here"),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15,)
+                ],
               )
           ),
-            SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width - 60,
-                height: 40,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(32),
-                    color: Colors.white70,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5), //color of shadow
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0, 2),
-                      ),
-                    ]),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Having any cravings in specific?"),
-                      Container(width: 50),
-                      Icon(Icons.search),
-                    ],
-                  ),
-                ),
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text("Categories", style: TextStyle(
@@ -122,7 +117,7 @@ class PastaPage extends StatelessWidget {
                       alignment: Alignment.bottomCenter,
                       margin: EdgeInsets.only(left: 15),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(5),
                           image: DecorationImage(
                             image: AssetImage(categories[index]['imagePath'],
                             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nutriland_prototype/home_screen.dart';
 import 'package:nutriland_prototype/navigation_drawer_widget.dart';
@@ -30,11 +31,20 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
     "18",
   ];
 
-  String calculatePortion (double value, String constant){
+  String calculatePortion(double value, String constant) {
     double times = double.parse(constant) / 6;
     var result = value * times;
-
+    // showToast();
     return result.toString();
+  }
+
+  void showToast(String servings) {
+    Fluttertoast.showToast(
+        msg: "Ingredients adjusted for " + servings + " servings",
+        fontSize: 18,
+        backgroundColor: const Color.fromRGBO(255, 220, 186, 1),
+        textColor: Colors.black,
+    );
   }
 
   late String _startPortion = "6";
@@ -42,16 +52,23 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.grey[200],
         endDrawer: NavigationDrawerWidget(),
         appBar: AppBar(
           centerTitle: true,
           title: GestureDetector(
-            onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));},
-            child: Text('NutrilandHn', style: TextStyle(
-              color: Colors.black87,
-              fontFamily: 'GreatVibes',
-              fontSize: 40,
-            ),),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+            },
+            child: Text(
+              'NutrilandHn',
+              style: TextStyle(
+                color: Colors.black87,
+                fontFamily: 'GreatVibes',
+                fontSize: 40,
+              ),
+            ),
           ),
           backgroundColor: const Color.fromRGBO(255, 220, 186, 1),
           elevation: 10,
@@ -108,11 +125,6 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                     SizedBox(
                       width: 15,
                     ),
-                    Icon(
-                      Icons.pie_chart,
-                      color: Color.fromRGBO(255, 220, 186, 1),
-                      size: 23,
-                    ),
                     SizedBox(
                       width: 5,
                     ),
@@ -121,24 +133,41 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                       decoration: BoxDecoration(
                         color: Color.fromRGBO(255, 220, 186, 1),
                       ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                          value: _startPortion,
-                          alignment: AlignmentDirectional.center,
-                          elevation: 0,
-                          dropdownColor: Color.fromRGBO(255, 220, 186, 1),
-                          items: portions.map((String value) {
-                            return DropdownMenuItem(
-                              value: value,
-                              child: Center(child: Text(value)),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              _startPortion = value.toString();
-                            });
-                          },
-                        ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.pie_chart,
+                            color: Colors.white,
+                            size: 23,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              value: _startPortion,
+                              alignment: AlignmentDirectional.center,
+                              elevation: 0,
+                              dropdownColor: Color.fromRGBO(255, 220, 186, 1),
+                              items: portions.map((String value) {
+                                return DropdownMenuItem(
+                                  value: value,
+                                  child: Center(child: Text(value)),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _startPortion = value.toString();
+                                  showToast(value.toString());
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("Servings"),
+                        ],
                       ),
                     ),
                   ],
@@ -193,7 +222,8 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue1 = value!),
                               ),
-                              Text(calculatePortion(9, _startPortion) + " lasagna noodles"),
+                              Text(calculatePortion(9, _startPortion) +
+                                  " lasagna noodles"),
                             ],
                           ),
                         ),
@@ -207,7 +237,8 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue2 = value!),
                               ),
-                              Text(calculatePortion(4.5, _startPortion) + " cups meat sauce"),
+                              Text(calculatePortion(4.5, _startPortion) +
+                                  " cups meat sauce"),
                             ],
                           ),
                         ),
@@ -221,7 +252,8 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue3 = value!),
                               ),
-                              Text(calculatePortion(475, _startPortion) + " grams ricotta"),
+                              Text(calculatePortion(475, _startPortion) +
+                                  " grams ricotta"),
                             ],
                           ),
                         ),
@@ -235,7 +267,8 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue4 = value!),
                               ),
-                              Text(calculatePortion(3, _startPortion) + " cups mozzarella"),
+                              Text(calculatePortion(3, _startPortion) +
+                                  " cups mozzarella"),
                             ],
                           ),
                         ),
@@ -249,7 +282,8 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue5 = value!),
                               ),
-                              Text(calculatePortion(1, _startPortion) + " cup parmessan"),
+                              Text(calculatePortion(1, _startPortion) +
+                                  " cup parmessan"),
                             ],
                           ),
                         ),
@@ -263,7 +297,8 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue6 = value!),
                               ),
-                              Text(calculatePortion(3, _startPortion) + " tablespoons butter"),
+                              Text(calculatePortion(3, _startPortion) +
+                                  " tablespoons butter"),
                             ],
                           ),
                         ),
@@ -277,7 +312,8 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue7 = value!),
                               ),
-                              Text(calculatePortion(3, _startPortion) + " tablespoons flour"),
+                              Text(calculatePortion(3, _startPortion) +
+                                  " tablespoons flour"),
                             ],
                           ),
                         ),
@@ -291,7 +327,8 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue8 = value!),
                               ),
-                              Text(calculatePortion(2, _startPortion) + " cups milk"),
+                              Text(calculatePortion(2, _startPortion) +
+                                  " cups milk"),
                             ],
                           ),
                         ),
@@ -305,7 +342,8 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue9 = value!),
                               ),
-                              Text(calculatePortion(0.25, _startPortion) + " teaspoons salt"),
+                              Text(calculatePortion(0.25, _startPortion) +
+                                  " teaspoons salt"),
                             ],
                           ),
                         ),
@@ -319,7 +357,8 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                                 onChanged: (value) async =>
                                     setState(() => checkBoxValue10 = value!),
                               ),
-                              Text(calculatePortion(0.12, _startPortion) + " teaspoons nutmeg"),
+                              Text(calculatePortion(0.12, _startPortion) +
+                                  " teaspoons nutmeg"),
                             ],
                           ),
                         ),
@@ -398,7 +437,8 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                         SizedBox(
                           height: 10,
                         ),
-                        Text("Melt butter in a medium saucepan over medium-low. Whisk in flour until mixture forms a paste,about 2 min. Gradually whisk in milk. Increase heatto medium. Cook, stirring constantly and scrapingthe bottom of the pot, until sauce thickens, 7 to 8min. Stir in salt and nutmeg. "),
+                        Text(
+                            "Melt butter in a medium saucepan over medium-low. Whisk in flour until mixture forms a paste,about 2 min. Gradually whisk in milk. Increase heatto medium. Cook, stirring constantly and scrapingthe bottom of the pot, until sauce thickens, 7 to 8min. Stir in salt and nutmeg. "),
                         SizedBox(
                           height: 10,
                         ),
@@ -432,83 +472,117 @@ class _LasagnaRecipeState extends State<LasagnaRecipe> {
                 ),
               ),
               Center(
-                child: Text("Popular with this recipe", style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.black54,
-                    fontFamily: 'Lato'
-                ),),
+                child: Text(
+                  "Popular with this recipe",
+                  style: TextStyle(
+                      fontSize: 25, color: Colors.black54, fontFamily: 'Lato'),
+                ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 // ignore: prefer_const_literals_to_create_immutables
                 children: <Widget>[
                   Container(
-                    decoration: BoxDecoration(border: Border.all(color: Colors.grey),),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Image.asset("assets/wings.jpg", height: 120, width: 120, fit: BoxFit.fill),
-                        Text("BBQ Wings", style: TextStyle(fontSize: 20),),
-                        Text("Basics", style: TextStyle(fontSize: 15),),
-                        RatingBar.builder(
-                          initialRating: 4,
-                          minRating: 1,
-                          itemSize: 17,
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: Color.fromRGBO(255, 220, 186, 1),
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Image.asset("assets/wings.jpg",
+                              height: 120, width: 120, fit: BoxFit.fill),
+                          Text(
+                            "BBQ Wings",
+                            style: TextStyle(fontSize: 20),
                           ),
-                          onRatingUpdate: (rating) {},
-                        ),
-                      ],
+                          Text(
+                            "Basics",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          RatingBar.builder(
+                            initialRating: 4,
+                            minRating: 1,
+                            itemSize: 17,
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Color.fromRGBO(255, 220, 186, 1),
+                            ),
+                            onRatingUpdate: (rating) {},
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Container(
-                    decoration: BoxDecoration(border: Border.all(color: Colors.grey),),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Image.asset("assets/salads.jpg", height: 120, width: 120, fit: BoxFit.fill),
-                        Text("Green Salad", style: TextStyle(fontSize: 20),),
-                        Text("Salads", style: TextStyle(fontSize: 15),),
-                        RatingBar.builder(
-                          initialRating: 2,
-                          minRating: 1,
-                          itemSize: 17,
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: Color.fromRGBO(255, 220, 186, 1),
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Image.asset("assets/salads.jpg",
+                              height: 120, width: 120, fit: BoxFit.fill),
+                          Text(
+                            "Green Salad",
+                            style: TextStyle(fontSize: 20),
                           ),
-                          onRatingUpdate: (rating) {},
-                        ),
-                      ],
+                          Text(
+                            "Salads",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          RatingBar.builder(
+                            initialRating: 2,
+                            minRating: 1,
+                            itemSize: 17,
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Color.fromRGBO(255, 220, 186, 1),
+                            ),
+                            onRatingUpdate: (rating) {},
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Container(
-                    decoration: BoxDecoration(border: Border.all(color: Colors.grey),),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Image.asset("assets/toast.jpg", height: 120, width: 120, fit: BoxFit.fill),
-                        Text("Garlic Toast", style: TextStyle(fontSize: 20),),
-                        Text("Basics", style: TextStyle(fontSize: 15),),
-                        RatingBar.builder(
-                          initialRating: 3.5,
-                          minRating: 1,
-                          itemSize: 17,
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: Color.fromRGBO(255, 220, 186, 1),
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Image.asset("assets/toast.jpg",
+                              height: 120, width: 120, fit: BoxFit.fill),
+                          Text(
+                            "Garlic Toast",
+                            style: TextStyle(fontSize: 20),
                           ),
-                          onRatingUpdate: (rating) {},
-                        ),
-                      ],
+                          Text(
+                            "Basics",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          RatingBar.builder(
+                            initialRating: 3.5,
+                            minRating: 1,
+                            itemSize: 17,
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Color.fromRGBO(255, 220, 186, 1),
+                            ),
+                            onRatingUpdate: (rating) {},
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               const Divider(
                 height: 0,
                 thickness: 3,

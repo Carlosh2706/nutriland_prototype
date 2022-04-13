@@ -37,6 +37,8 @@ dependencies:
   carousel_slider: ^4.0.0
   flutter_rating_bar: ^4.0.0
   font_awesome_flutter: ^9.2.0
+  shared_preferences: ^2.0.13
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +81,10 @@ flutter:
     - assets/macandcheese.jpg
     - assets/toast.jpg
     - assets/wings.jpg
+    - assets/onboard1.jpg
+    - assets/onboard2.jpg
+    - assets/onboard3.jpg
+    - assets/onboard4.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

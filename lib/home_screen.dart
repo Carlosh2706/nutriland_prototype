@@ -26,53 +26,53 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       endDrawer: NavigationDrawerWidget(),
       appBar: AppBar(
         centerTitle: true,
-        title: GestureDetector(
-          onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));},
-          child: Text('NutrilandHn', style: TextStyle(
-              color: Colors.black87,
-              fontFamily: 'GreatVibes',
-              fontSize: 40,
-          ),),
-        ),
+        title: Text('NutrilandHn', style: TextStyle(
+            color: Colors.black87,
+            fontFamily: 'GreatVibes',
+            fontSize: 40,
+        ),),
         backgroundColor: const Color.fromRGBO(255, 220, 186, 1),
         elevation: 10,
       ),
       body: SingleChildScrollView(
         child: Column(
               children: [
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width - 60,
-                    height: 40,
+                Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 100,
+                    alignment: Alignment.bottomCenter,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(32),
-                        color: Colors.white70,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5), //color of shadow
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(0, 2),
+                        image: DecorationImage(
+                          image: AssetImage("assets/toast.jpg",
                           ),
-                        ]),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Having any cravings in specific?"),
-                          Container(width: 50),
-                          Icon(Icons.search),
-                        ],
+                          fit: BoxFit.cover,
+                        )
+                    ),
+                    child: Center(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width - 30,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.white,
+                            ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: const [
+                              Icon(Icons.search),
+                              SizedBox(width: 10,),
+                              Text("Search a recipe here"),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -97,7 +97,7 @@ class HomeScreen extends StatelessWidget {
                             alignment: Alignment.bottomCenter,
                             margin: EdgeInsets.only(left: 15),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(4),
                               image: DecorationImage(
                                 image: AssetImage(categories[index]['imagePath'],
                               ),
@@ -124,9 +124,9 @@ class HomeScreen extends StatelessWidget {
                   thickness: 3,
                 ),
                 Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(5),
                   child: CarouselSlider(
-                    options: CarouselOptions(height: 150.0, autoPlay: true),
+                    options: CarouselOptions(height: 160.0, autoPlay: true),
                     items: [
                       'assets/steak.jpg',
                       'assets/burger.jpg',

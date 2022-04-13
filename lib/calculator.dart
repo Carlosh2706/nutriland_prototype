@@ -36,17 +36,17 @@ class _CalculatorState extends State<Calculator> {
     '3': [28.3495, 0.02834, 3.28084, 0, 0.1]
   };
 
-  void convert (double value, String from, String to){
-      int? nFrom = measuresMap[from];
-      int? nTo = measuresMap[to];
-      var multi = formulas[nFrom.toString()][nTo];
-      var result = value * multi;
+  void convert(double value, String from, String to) {
+    int? nFrom = measuresMap[from];
+    int? nTo = measuresMap[to];
+    var multi = formulas[nFrom.toString()][nTo];
+    var result = value * multi;
 
-      resultMessage = result.toString();
+    resultMessage = result.toString();
 
-      setState(() {
-        resultMessage = resultMessage;
-      });
+    setState(() {
+      resultMessage = resultMessage;
+    });
   }
 
   late double userInput;
@@ -57,6 +57,7 @@ class _CalculatorState extends State<Calculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       endDrawer: NavigationDrawerWidget(),
       appBar: AppBar(
         centerTitle: true,
@@ -85,7 +86,8 @@ class _CalculatorState extends State<Calculator> {
                 ),
               ),
               Container(
-                decoration: BoxDecoration(border: Border.all()),
+                decoration:
+                    BoxDecoration(border: Border.all(), color: Colors.white),
                 width: MediaQuery.of(context).size.width - 10,
                 child: Column(
                   // ignore: prefer_const_literals_to_create_immutables
@@ -102,6 +104,7 @@ class _CalculatorState extends State<Calculator> {
                                 if (input != null) {
                                   setState(() {
                                     userInput = input;
+                                    convert(userInput, _startMeasure, _convertMeasure);
                                   });
                                 }
                               },
@@ -109,14 +112,18 @@ class _CalculatorState extends State<Calculator> {
                                 fontSize: 15,
                               ),
                               decoration: InputDecoration(
-                                  hintText: "Enter amount",
-                               ),
+                                hintText: "Enter amount",
+                              ),
                             ),
                           ),
                         ),
                         Expanded(flex: 1, child: Center(child: Text("="))),
-                        Expanded(flex: 2, child: Text((resultMessage == null)?'':resultMessage),
-                        )],
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                              (resultMessage == null) ? '' : resultMessage),
+                        )
+                      ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -184,37 +191,6 @@ class _CalculatorState extends State<Calculator> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                  Color.fromRGBO(255, 220, 186, 1),
-                )),
-                onPressed: () => {
-
-                    if(_startMeasure.isEmpty || _convertMeasure.isEmpty || userInput == 0){}
-
-                    else
-                      convert(userInput, _startMeasure, _convertMeasure),
-                },
-                child: Container(
-                  alignment: AlignmentDirectional.center,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 220, 186, 1),
-                    borderRadius: BorderRadius.circular(0),
-                  ),
-                  child: Text(
-                    "Convert",
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
         ),

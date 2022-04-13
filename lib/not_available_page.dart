@@ -9,6 +9,7 @@ class NotAvailablePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       endDrawer: NavigationDrawerWidget(),
       appBar: AppBar(
         centerTitle: true,
